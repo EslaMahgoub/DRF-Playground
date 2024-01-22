@@ -66,7 +66,45 @@ product_delete_view = ProductDestroyAPIView.as_view()
 
 # product_detail_view = ProductDetaiAPIView.as_view()
 
-  #   return self.list(request, *args, **kwargs)
+class ProductMixinView(
+  mixins.CreateModelMixin,
+  mixins.ListModelMixin,
+  mixins.RetrieveModelMixin,
+  mixins.UpdateModelMixin,
+  mixins.DestroyModelMixin,
+  generics.GenericAPIView
+  ):
+
+  queryset = Product.objects.all()
+  serializer_class = ProductSerializer
+  lookup_fields = 'pk'
+
+  
+  def get(self, request, *args, **kwargs):
+    pk = kwargs.get("pk")
+    if pk is not None:
+      return self.retrieve(request, *args, **kwargs)
+    return self.list(request, *args, **kwargs)
+  
+  def post(self, request, *args, **kwargs):
+    return self.create(request, *args, **kwargs)
+  
+  def perform_create(self, serializer):
+    # serializer.save(user=self.request.user)
+    print(serializer.validated_data)
+    title = serializer.validated_data.get('title')
+    content = serializer.validated_data.get('content')
+    if content is None:
+      content = title
+    serializer.save(content=content)
+  
+  def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+  def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+product_mixin_view = ProductMixinView.as_view()
 
 # combine list, detail and create in one method
 # @api_view(['GET', 'POST'])
