@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.query import QuerySet
+from django.urls import reverse
 
 User = settings.AUTH_USER_MODEL # auth.User
 
@@ -38,6 +39,22 @@ class Product(models.Model):
   public = models.BooleanField(default=True)
 
   objects = ProductManager()
+
+  @property
+  def body(self):
+    return self.content
+  
+  @property
+  def path(self):
+    return f"/products/{self.pk}"
+  
+  def get_absolute_url(self):
+        return reverse("product-detail", kwargs={"pk": self.pk})
+  
+  @property
+  def endpoint(self):
+    return self.get_absolute_url()
+    
 
   def is_public(self):
     return self.public
