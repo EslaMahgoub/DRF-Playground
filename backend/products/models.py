@@ -1,9 +1,13 @@
+import random
 from django.db import models
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.query import QuerySet
-# Create your models here.
+
 User = settings.AUTH_USER_MODEL # auth.User
+
+#TODO: use ForeignKey model instead of list
+TAGS_MODEL_VALUES = ['electronics', 'cars', 'boats', 'movies', 'cameras']
 
 class ProductQuerySet(models.QuerySet):
   def is_public(self):
@@ -35,6 +39,12 @@ class Product(models.Model):
 
   objects = ProductManager()
 
+  def is_public(self):
+    return self.public
+  
+  def get_tags_list(self):
+    return [random.choice(TAGS_MODEL_VALUES)]
+  
   @property
   def sale_price(self):
     return "%.2f" %(float(self.price) * 0.8)
