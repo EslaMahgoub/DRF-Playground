@@ -23,8 +23,6 @@ class ProductSerializer(serializers.ModelSerializer):
   title = serializers.CharField(validators=[validators.validate_title_no_hello, 
                                             validators.unique_product_title])
   
-  
-  
   class Meta:
     model = Product
     fields = [
@@ -36,6 +34,7 @@ class ProductSerializer(serializers.ModelSerializer):
       'content',
       'price',
       'sale_price',
+      'public'
     ]
 
   def get_edit_url(self, obj):
