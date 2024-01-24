@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     # third party packages 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     
     #internal apps
     'api',
@@ -132,19 +134,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# auth_classes = [
-#   "rest_framework.authentication.SessionAuthentication",
-#   "api.authentication.TokenAuthentication"
-
-#   ]
-# if DEBUG:
-#   auth_classes = [
-#     "api.authentication.TokenAuthentication"
-#   ]
 REST_FRAMEWORK = {
   "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
-        "api.authentication.TokenAuthentication"
+        "api.authentication.TokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
   "DEFAULT_PERMISSION_CLASSES": [
     "rest_framework.permissions.IsAuthenticatedOrReadOnly" #GET
@@ -158,4 +152,11 @@ ALGOLIA = {
     'APPLICATION_ID': '9BZJOG3ZH8',
     'API_KEY': '0eaa839728854ce3b777f775da5ffd62',
     'INDEX_PREFIX': 'esl'
+}
+
+
+SIMPLE_JWT = {
+  "AUTH_HEADER_TYPES": ["Bearer"],
+  "ACCESS_TOKEN_LIFETIME": datetime.timedelta(seconds=30), #minutes=5
+  "REFRESH_TOKEN_LIFETIME": datetime.timedelta(minutes=1), #days=1
 }
