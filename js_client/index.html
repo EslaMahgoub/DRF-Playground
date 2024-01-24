@@ -6,21 +6,46 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.1.0/themes/reset-min.css" integrity="sha256-2AeJLzExpZvqLUxMfcs+4DWcMwNfpnjUeAAvEtPr0wU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.1.0/themes/satellite-min.css" integrity="sha256-p/rGN4RGy6EDumyxF9t7LKxWGg6/MZfGhJM/asKkqvA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
-  <body>
-    <form id="login-form" method="POST">
-      <input type="text" name="username" placeholder="Enter usename"/>
-      <input type="password" name="password" placeholder="Enter password"/>
-      <input type="submit" value="Login"/>
-    </form>
+  <div class="container-fluid">
+    <body>
 
-    <form id="search-form" method="GET">
-      <input type="text" name="q" placeholder="Search products"/>
-      <input type="submit" value="search"/>
-    </form>
+      <h1>Store</h1>
+      <form id="login-form" method="POST" class="mb-3">
+        <div class="mb-3">
+          <input type="text" name='username' class="form-control">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" name="password" id="password">
+        </div>
+        <button type="submit" class="btn btn-primary" value="Login">Submit</button>
+      </form>
 
-    <div id="content-container"></div>
-    <script src="./client.js"></script>
-  </body>
+      <form style='display:none' id="search-form" method="GET">
+        <input type="text" name="q" placeholder="Search products"/>
+        <input type="submit" value="search"/>
+      </form>
+
+      <div id="content-container"></div>
+      <div id="searchbox"></div>
+      <div id="clear-refinements"></div>
+      <div class="row">
+        <div class="col" id="public-list">
+        </div>
+        <div class="col" id="user-list">
+        </div>
+      </div>
+      <div id="hits"></div>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.js" integrity="sha256-pxkGFjfnFWYGOtV9uhCWK/spKiGS0Z7gVDKYm39LyfM=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.64.0/dist/instantsearch.production.min.js" integrity="sha256-OtorR+6G6evpfgqzuOJjl5iH4JW+87ETzSpLZiVPTDg=" crossorigin="anonymous"></script>
+
+      <script src="./client.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> 
+    </body>
+  </div>
 </html>

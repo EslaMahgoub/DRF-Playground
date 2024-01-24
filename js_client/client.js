@@ -157,3 +157,49 @@ function getProductList(){
 }
 
 validateJWTToken()
+
+const searchClient = algoliasearch('9BZJOG3ZH8', 
+'1059fd0b06047fa155671231ec0f5feb');
+
+const search = instantsearch({
+  indexName: 'esl_Product',
+  searchClient,
+});
+
+search.addWidgets([
+  instantsearch.widgets.searchBox({
+    container: '#searchbox',
+  }),
+
+  instantsearch.widgets.clearRefinements({
+    container: "#clear-refinements",
+  }),
+
+
+  instantsearch.widgets.refinementList({
+    container: "#user-list",
+    attribute: 'user'
+  }),
+
+  instantsearch.widgets.refinementList({
+    container: "#public-list",
+    attribute: 'public'
+  }),
+
+
+  instantsearch.widgets.hits({
+    container: '#hits',
+    templates: {
+      item: `
+          <div>
+            <div>{{#helpers.highlight}}{"attribute": "title" }{{/helpers.highlight}}</div>
+            <div>{{#helpers.highlight}}{"attribute": "body" }{{/helpers.highlight}}</div>
+            
+            <p>{{user}}</p><p>\${{price}}</p>
+            
+          </div>`
+    }
+  })
+]);
+
+search.start();
